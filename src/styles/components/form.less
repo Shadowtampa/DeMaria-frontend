@@ -1,0 +1,157 @@
+@import '../variables.less';
+
+.form {
+    &__group {
+        margin-bottom: @spacing-lg;
+
+        &-label {
+            display: block;
+            font-size: @font-size-sm;
+            font-weight: 500;
+            color: @color-text;
+            margin-bottom: @spacing-xs;
+        }
+
+        &-input {
+            width: 100%;
+            padding: @spacing-sm @spacing-md;
+            border: 1px solid fade(@color-border, 50%);
+            border-radius: @border-radius-base;
+            font-size: @font-size-base;
+            background-color: fade(@color-background, 70%);
+            color: @color-text;
+            .transition-base();
+
+            &::placeholder {
+                color: fade(@color-text-light, 50%);
+            }
+
+            &:focus {
+                outline: none;
+                border-color: @color-primary;
+                background-color: fade(@color-background, 90%);
+                box-shadow: 0 0 0 3px fade(@color-primary, 20%);
+            }
+
+            &:hover {
+                border-color: @color-primary;
+                background-color: fade(@color-background, 80%);
+            }
+
+            &--textarea {
+                min-height: 120px;
+                resize: vertical;
+                line-height: 1.6;
+            }
+
+            &:disabled {
+                background-color: fade(@color-background-dark, 70%);
+                cursor: not-allowed;
+                color: @color-text-light;
+            }
+
+            &--error {
+                border-color: @color-danger;
+                background-color: fade(@color-danger, 5%);
+
+                &:focus {
+                    border-color: @color-danger;
+                    box-shadow: 0 0 0 3px fade(@color-danger, 20%);
+                }
+
+                &:hover {
+                    border-color: @color-danger;
+                }
+            }
+        }
+    }
+
+    &__materials {
+        border: 1px solid fade(@color-border, 50%);
+        border-radius: @border-radius-lg;
+        padding: @spacing-lg;
+        background-color: fade(@color-background, 70%);
+
+        &-title {
+            font-size: @font-size-base;
+            font-weight: 600;
+            color: @color-text;
+            margin-bottom: @spacing-md;
+        }
+
+        &-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.05);
+            }
+
+            &:not(:last-child) {
+                margin-bottom: @spacing-sm;
+            }
+
+            &--error {
+                background-color: rgba(255, 0, 0, 0.05);
+                border: 1px solid rgba(255, 0, 0, 0.2);
+            }
+
+            &-checkbox {
+                width: 1.25rem;
+                height: 1.25rem;
+                cursor: pointer;
+            }
+
+            &-label {
+                flex: 1;
+                font-weight: 500;
+            }
+
+            &-input {
+                width: 80px;
+                padding: 0.5rem;
+                border: 1px solid #ddd;
+                border-radius: 0.25rem;
+                text-align: center;
+                transition: all 0.2s ease;
+
+                &:focus {
+                    outline: none;
+                    border-color: var(--primary);
+                    box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.1);
+                }
+
+                &--error {
+                    border-color: red;
+                    background-color: rgba(255, 0, 0, 0.05);
+
+                    &:focus {
+                        border-color: red;
+                        box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.1);
+                    }
+                }
+            }
+
+            &-quantity {
+                min-width: 150px;
+                font-size: 0.875rem;
+                color: #666;
+
+                &.form__materials-item-error {
+                    color: red;
+                    font-weight: 500;
+                }
+            }
+
+            &-error {
+                font-size: @font-size-sm;
+                color: @color-danger;
+                margin-left: @spacing-sm;
+            }
+        }
+    }
+}

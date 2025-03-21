@@ -1,0 +1,86 @@
+.app {
+    min-height: 100vh;
+    background: linear-gradient(135deg, @color-primary-light 0%, @color-secondary-light 100%);
+
+    &__header {
+        .glass-effect();
+        padding: @spacing-md 0;
+        margin-bottom: @spacing-xl;
+        box-shadow: @shadow-md;
+        border-bottom: 1px solid fade(@color-border, 30%);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+
+        &-container {
+            max-width: @screen-xl;
+            margin: 0 auto;
+            padding: 0 @spacing-md;
+        }
+
+        &-title {
+            font-size: @font-size-2xl;
+            font-weight: 700;
+            color: @color-text;
+            text-align: center;
+            margin: 0;
+
+            @media (min-width: @screen-md) {
+                font-size: @font-size-3xl;
+                text-align: left;
+            }
+        }
+    }
+
+    &__main {
+        max-width: @screen-xl;
+        margin: 0 auto;
+        padding: @spacing-md;
+
+        .section {
+            margin-bottom: @spacing-xl;
+
+            &__header {
+                display: flex;
+                flex-direction: column;
+                gap: @spacing-md;
+                margin-bottom: @spacing-lg;
+
+                @media (min-width: @screen-md) {
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                &-title {
+                    font-size: @font-size-xl;
+                    font-weight: 600;
+                    color: @color-text;
+                    margin: 0;
+                }
+            }
+
+            &__form {
+                margin-bottom: @spacing-xl;
+                .glass-effect();
+                border-radius: @border-radius-lg;
+                box-shadow: @shadow-lg;
+                border: 1px solid fade(@color-border, 30%);
+            }
+
+            &__grid {
+                display: grid;
+                gap: @spacing-md;
+                grid-template-columns: 1fr;
+
+                @media (min-width: @screen-sm) {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+
+                @media (min-width: @screen-lg) {
+                    grid-template-columns: repeat(3, 1fr);
+                }
+            }
+        }
+    }
+}

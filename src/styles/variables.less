@@ -1,0 +1,81 @@
+// Paleta de cores principal
+@color-primary: #6366f1; // Indigo vibrante
+@color-primary-hover: darken(@color-primary, 10%);
+@color-primary-light: lighten(@color-primary, 32%);
+
+@color-secondary: #ec4899; // Rosa moderno
+@color-secondary-hover: darken(@color-secondary, 10%);
+@color-secondary-light: lighten(@color-secondary, 32%);
+
+@color-success: #22c55e;
+@color-warning: #eab308;
+@color-danger: #ef4444;
+
+// Tons neutros
+@color-text: #1f2937;
+@color-text-light: #6b7280;
+@color-border: #e5e7eb;
+@color-background: #ffffff;
+@color-background-light: #f9fafb;
+@color-background-dark: #f3f4f6;
+
+// Espaçamento
+@spacing-unit: 8px;
+@spacing-xs: @spacing-unit;
+@spacing-sm: @spacing-unit * 2;
+@spacing-md: @spacing-unit * 3;
+@spacing-lg: @spacing-unit * 4;
+@spacing-xl: @spacing-unit * 5;
+
+// Breakpoints
+@screen-sm: 640px;
+@screen-md: 768px;
+@screen-lg: 1024px;
+@screen-xl: 1280px;
+
+// Border radius
+@border-radius-sm: 4px;
+@border-radius-base: 6px;
+@border-radius-lg: 8px;
+@border-radius-xl: 12px;
+
+// Tipografia
+@font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+@font-size-xs: 12px;
+@font-size-sm: 14px;
+@font-size-base: 16px;
+@font-size-lg: 18px;
+@font-size-xl: 20px;
+@font-size-2xl: 24px;
+@font-size-3xl: 30px;
+
+// Sombras
+@shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+@shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+@shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+@shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+
+// Mixins úteis
+.transition-base() {
+    transition: all 0.2s ease-in-out;
+}
+
+.flex-center() {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.glass-effect() {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.hover-scale() {
+    .transition-base();
+
+    &:hover {
+        transform: scale(1.02);
+    }
+}

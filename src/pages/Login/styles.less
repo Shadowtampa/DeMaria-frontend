@@ -1,0 +1,79 @@
+@primary-color: #1890ff;
+@error-color: #ff4d4f;
+@text-color: #333;
+@border-radius: 4px;
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+
+  .login-card {
+    background: white;
+    padding: 2rem;
+    border-radius: @border-radius;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+
+    h1 {
+      color: @text-color;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: @text-color;
+      }
+
+      input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #d9d9d9;
+        border-radius: @border-radius;
+        transition: all 0.3s;
+
+        &:focus {
+          outline: none;
+          border-color: @primary-color;
+          box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+        }
+      }
+
+      .error-message {
+        color: @error-color;
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+      }
+    }
+
+    .submit-button {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: @primary-color;
+      color: white;
+      border: none;
+      border-radius: @border-radius;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: darken(@primary-color, 10%);
+      }
+
+      &:disabled {
+        background-color: lighten(@primary-color, 20%);
+        cursor: not-allowed;
+      }
+    }
+  }
+} 

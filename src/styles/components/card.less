@@ -1,0 +1,94 @@
+@import '../variables.less';
+
+.card {
+    .glass-effect();
+    .hover-scale();
+    border-radius: @border-radius-lg;
+    border: 1px solid fade(@color-border, 30%);
+    box-shadow: @shadow-md;
+    overflow: hidden;
+
+    &__header {
+        padding: @spacing-md;
+        border-bottom: 1px solid fade(@color-border, 30%);
+
+        &-title {
+            font-size: @font-size-lg;
+            font-weight: 600;
+            color: @color-text;
+            margin: 0;
+        }
+    }
+
+    &__content {
+        padding: @spacing-md;
+
+        &-text {
+            color: @color-text-light;
+            margin-bottom: @spacing-md;
+            line-height: 1.6;
+        }
+
+        &-quantity {
+            font-weight: 500;
+            color: @color-text;
+            padding: @spacing-sm;
+            background-color: fade(@color-primary, 10%);
+            border-radius: @border-radius-base;
+            display: inline-block;
+        }
+
+        &-materials {
+            margin-top: @spacing-md;
+
+            &-title {
+                font-size: @font-size-sm;
+                font-weight: 600;
+                margin-bottom: @spacing-sm;
+                color: @color-text;
+            }
+
+            &-list {
+                .material-item {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: @spacing-sm;
+                    background-color: fade(@color-secondary, 10%);
+                    border-radius: @border-radius-base;
+                    margin-bottom: @spacing-xs;
+                    .transition-base();
+
+                    &:hover {
+                        background-color: fade(@color-secondary, 15%);
+                    }
+
+                    &__name {
+                        color: @color-text;
+                        font-weight: 500;
+                    }
+
+                    &__quantity {
+                        font-weight: 500;
+                        color: @color-text-light;
+                        background-color: fade(@color-background, 50%);
+                        padding: @spacing-xs @spacing-sm;
+                        border-radius: @border-radius-sm;
+                    }
+                }
+            }
+        }
+    }
+
+    &__footer {
+        padding: @spacing-md;
+        border-top: 1px solid fade(@color-border, 30%);
+        display: flex;
+        justify-content: flex-end;
+        gap: @spacing-sm;
+    }
+}
+
+.tachado {
+    text-decoration: line-through;
+}

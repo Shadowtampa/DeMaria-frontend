@@ -1,0 +1,115 @@
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: @spacing-sm @spacing-lg;
+    font-size: @font-size-base;
+    font-weight: 500;
+    border-radius: @border-radius-base;
+    cursor: pointer;
+    border: none;
+    .transition-base();
+    gap: @spacing-sm;
+    white-space: nowrap;
+
+    // Variantes
+    &--primary {
+        background-color: @color-primary;
+        color: white;
+
+        &:hover {
+            background-color: @color-primary-hover;
+            transform: translateY(-1px);
+            box-shadow: @shadow-md;
+        }
+
+        &:active {
+            transform: translateY(0);
+            box-shadow: @shadow-sm;
+        }
+    }
+
+    &--secondary {
+        background-color: @color-secondary;
+        color: white;
+
+        &:hover {
+            background-color: @color-secondary-hover;
+            transform: translateY(-1px);
+            box-shadow: @shadow-md;
+        }
+
+        &:active {
+            transform: translateY(0);
+            box-shadow: @shadow-sm;
+        }
+    }
+
+    &--outline {
+        background-color: transparent;
+        border: 2px solid @color-primary;
+        color: @color-primary;
+
+        &:hover {
+            background-color: fade(@color-primary, 10%);
+            transform: translateY(-1px);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+
+    &--danger {
+        background-color: @color-danger;
+        color: white;
+
+        &:hover {
+            background-color: darken(@color-danger, 10%);
+            transform: translateY(-1px);
+            box-shadow: @shadow-md;
+        }
+
+        &:active {
+            transform: translateY(0);
+            box-shadow: @shadow-sm;
+        }
+    }
+
+    // Tamanhos
+    &--small {
+        padding: @spacing-xs @spacing-sm;
+        font-size: @font-size-sm;
+    }
+
+    &--large {
+        padding: @spacing-md @spacing-xl;
+        font-size: @font-size-lg;
+    }
+
+    // Estados
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    // Ícones
+    .icon {
+        width: 16px;
+        height: 16px;
+
+        &--left {
+            margin-right: @spacing-xs;
+        }
+
+        &--right {
+            margin-left: @spacing-xs;
+        }
+    }
+
+    // Responsividade
+    @media (max-width: @screen-sm) {
+        width: 100%;
+    }
+}
