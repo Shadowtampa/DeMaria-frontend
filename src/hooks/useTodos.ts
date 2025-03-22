@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Todo } from '../types/entities';
-import { get, post } from '../services/baseAPI';
+import { get, post, del } from '../services/baseAPI';
 
 export function useTodos(isAuthenticated: boolean = false) {
     const [todos, setTodos] = useState<Todo[]>([]);
@@ -80,8 +80,19 @@ export function useTodos(isAuthenticated: boolean = false) {
         }
     };
 
-    const handleDeleteTodo = (id: number) => {
-        setTodos(todos.filter(m => m.id !== id));
+    const handleDeleteTodo = async (id: number) => {
+        try {
+            setIsLoading(true);
+            await del(`/api/todo/${id}`, true); // withToken = true
+            
+            // Atualiza a lista depois de deletar
+            await fetchTodos();
+        } catch (error) {
+            console.error('Erro ao excluir todo:', error);
+            throw error;
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleCancelTodo = () => {
