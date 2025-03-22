@@ -34,6 +34,8 @@ function App() {
 
   const [statusFilter, setStatusFilter] = useState<'all' | 'pendente' | 'concluida'>('all');
 
+  const [viewType, setViewType] = useState<'grid' | 'list'>('grid');
+
   const filteredTodos = todos.filter(todo => {
     if (statusFilter === 'all') return true;
     return todo.status === statusFilter;
@@ -91,7 +93,23 @@ function App() {
       <main className="app__main">
         <section className="section">
           <div className="section__header">
-            <h2 className="section__header-title">Todos</h2>
+            <div className="section__header-title-container">
+              <h2 className="section__header-title">Todos</h2>
+              <div className="view-toggle">
+                <Button 
+                  variant={viewType === 'grid' ? "primary" : "secondary"} 
+                  onClick={() => setViewType('grid')}
+                >
+                  <span>Grade</span>
+                </Button>
+                <Button 
+                  variant={viewType === 'list' ? "primary" : "secondary"} 
+                  onClick={() => setViewType('list')}
+                >
+                  <span>Lista</span>
+                </Button>
+              </div>
+            </div>
             <div className="section__header-buttons">
               <Button
                 variant="secondary"
@@ -146,6 +164,7 @@ function App() {
 
           <TodoList
             todos={filteredTodos}
+            viewType={viewType}
             onDelete={handleDeleteTodo}
             onEdit={handleEditTodo}
             handleToggleTodoStatus={handleToggleTodoStatus}

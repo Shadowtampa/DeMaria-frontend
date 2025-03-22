@@ -128,3 +128,56 @@
     gap: 12px; /* Espaçamento entre os botões */
     align-items: center;
 }
+
+.section__header-title-container {
+    display: flex;
+    align-items: center;
+    gap: @spacing-md;
+    
+    .view-toggle {
+        display: flex;
+        gap: 8px;
+    }
+}
+
+.todo-list {
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: @spacing-sm;
+    }
+    
+    &__item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: @spacing-sm @spacing-md;
+        border-radius: @border-radius-lg;
+        background-color: rgba(255, 255, 255, 0.8);
+        box-shadow: @shadow-sm;
+        transition: all 0.3s ease;
+        
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: @shadow-md;
+        }
+        
+        &-title {
+            margin: 0;
+            font-size: @font-size-md;
+            font-weight: 500;
+        }
+        
+        &-actions {
+            display: flex;
+            align-items: center;
+        }
+    }
+    
+    &__empty {
+        text-align: center;
+        padding: @spacing-md;
+        font-style: italic;
+        color: @color-text-light;
+    }
+}
