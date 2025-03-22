@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Todo } from '../types/entities';
-import { get } from '../services/baseAPI';
+import { get, post } from '../services/baseAPI';
 
 export function useTodos(isAuthenticated: boolean = false) {
     const [todos, setTodos] = useState<Todo[]>([]);
@@ -29,14 +29,27 @@ export function useTodos(isAuthenticated: boolean = false) {
         }
     };
 
-    const handleAddTodo = (todo: Omit<Todo, 'id'>) => {
-        const novoTodo: Todo = {
-            ...todo,
-            id: todos.length + 1
-        };
-        setTodos([...todos, novoTodo]);
-        setTodoEmEdicao(undefined);
-        setMostrarFormTodo(false);
+    const handleAddTodo = async (todo: Omit<Todo, 'id'>) => {
+        try {
+            setIsLoading(true);
+            const response = await post('/api/todo', {
+                title: todo.title,
+                description: todo.description || '',
+                status: todo.status || 'pendente'
+            }, true); // withToken = true
+            
+            // Atualiza a lista completa após adicionar
+            await fetchTodos();
+            
+            setTodoEmEdicao(undefined);
+            setMostrarFormTodo(false);
+            return response.data;
+        } catch (error) {
+            console.error('Erro ao adicionar todo:', error);
+            throw error;
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleEditTodo = (todo: Todo) => {
