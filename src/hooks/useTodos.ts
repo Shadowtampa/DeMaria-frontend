@@ -168,6 +168,27 @@ export function useTodos(isAuthenticated: boolean = false) {
         setTodoEmEdicao(undefined);
     };
 
+    const handleAutomateTodo = async (activity: string) => {
+        try {
+            setIsLoading(true);
+            
+            // Faz a chamada para a API de automação de todos
+            const response = await post('/api/todo/automate/', {
+                prompt: activity
+            }, true); // withToken = true
+            
+            // Atualiza a lista de todos após a criação automática
+            await fetchTodos();
+            
+            return response.data;
+        } catch (error) {
+            console.error('Erro ao gerar todo com IA:', error);
+            throw error;
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return {
         todos,
         setTodos,
@@ -181,6 +202,7 @@ export function useTodos(isAuthenticated: boolean = false) {
         handleDeleteTodo,
         handleCancelTodo,
         handleShowTodoForm,
-        handleToggleTodoStatus
+        handleToggleTodoStatus,
+        handleAutomateTodo
     };
 } 

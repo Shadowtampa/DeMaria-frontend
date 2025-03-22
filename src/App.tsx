@@ -7,6 +7,7 @@ import { useAuth } from './hooks/useAuth';
 import TodoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
 import AuthModal from './components/AuthModal';
+import AITaskModal from './components/AITaskModal';
 
 function App() {
   const { isAuthenticated, handleSignUp, handleLogin, handleLogout, user } = useAuth();
@@ -19,13 +20,17 @@ function App() {
     handleEditTodo,
     handleUpdateTodo,
     handleDeleteTodo,
+    handleAutomateTodo,
     handleCancelTodo,
     handleShowTodoForm,
     handleToggleTodoStatus
   } = useTodos(isAuthenticated);
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [modalType, setModalType] = useState<'login' | 'signup' | null>(null);
+  const [modalType, setModalType] = 
+  useState<'login' | 'signup' | null>(null);
+
+  const [aiModalOpen, setAiModalOpen] = useState(false);
 
   const openSignUpForm = () => {
     setModalType('signup');
@@ -43,6 +48,11 @@ function App() {
       : handleSignUp(name, email, password, passwordConfirmation);
     
     setModalOpen(false);
+  };
+
+  const handleAITaskSubmit = (activity: string) => {
+    handleAutomateTodo(activity);
+    setAiModalOpen(false);
   };
 
   return (
@@ -75,12 +85,20 @@ function App() {
         <section className="section">
           <div className="section__header">
             <h2 className="section__header-title">Todos</h2>
-            <Button
-              variant="primary"
-              onClick={handleShowTodoForm}
-            >
-              Novo Todo
-            </Button>
+            <div className="section__header-buttons">
+              <Button
+                variant="secondary"
+                onClick={() => setAiModalOpen(true)}
+              >
+                Criar com IA
+              </Button>
+              <Button
+                variant="primary"
+                onClick={handleShowTodoForm}
+              >
+                Novo Todo
+              </Button>
+            </div>
           </div>
 
           {mostrarFormTodo && (
@@ -107,6 +125,12 @@ function App() {
         type={modalType}
         onClose={() => setModalOpen(false)}
         onSubmit={handleAuthSubmit}
+      />
+      
+      <AITaskModal
+        isOpen={aiModalOpen}
+        onClose={() => setAiModalOpen(false)}
+        onSubmit={handleAITaskSubmit}
       />
     </div>
   );
