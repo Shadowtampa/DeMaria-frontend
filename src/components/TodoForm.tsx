@@ -42,7 +42,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ todo, onSubmit, onCancel }) => {
             <form onSubmit={handleSubmit}>
                 <div className="card__header">
                     <h2 className="card__header-title">
-                        {todo ? 'Editar Todo' : 'Novo Todo'}
+                        {todo ? 'Editar To-do' : 'Novo To-do'}
                     </h2>
                 </div>
                 <div className="card__content">

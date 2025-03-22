@@ -164,13 +164,17 @@
         
         &-title {
             margin: 0;
-            font-size: @font-size-md;
+            font-size: @font-size-lg;
             font-weight: 500;
         }
         
         &-actions {
             display: flex;
             align-items: center;
+        }
+
+        &--completed {
+            background-color: rgba(76, 175, 80, 0.1); // Verde claro com transparência
         }
     }
     
@@ -180,4 +184,15 @@
         font-style: italic;
         color: @color-text-light;
     }
+}
+
+.button--small {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    height: auto;
+    min-height: 28px;
+  }
+
+.button-icon {
+  margin-right: 6px;
 }

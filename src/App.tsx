@@ -8,6 +8,7 @@ import TodoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
 import AuthModal from './components/AuthModal';
 import AITaskModal from './components/AITaskModal';
+import { Grid, List, PlusCircle, Bot } from 'lucide-react';
 
 function App() {
   const { isAuthenticated, handleSignUp, handleLogin, handleLogout, user } = useAuth();
@@ -64,6 +65,21 @@ function App() {
     setAiModalOpen(false);
   };
 
+  const handleUserLogout = () => {
+    handleLogout().then(() => {
+      window.location.reload();
+    });
+  };
+
+  const handleAIButtonClick = () => {
+    if (isAuthenticated) {
+      setAiModalOpen(true);
+    } else {
+      alert("Você precisa estar logado para usar o recurso de IA.");
+      openLoginForm();
+    }
+  };
+
   return (
     <div className="app">
       <header className="app__header">
@@ -73,7 +89,7 @@ function App() {
           </h1>
           <div className="app__header-buttons">
             {isAuthenticated ? (
-              <Button variant="danger" onClick={handleLogout}>
+              <Button variant="danger" onClick={handleUserLogout}>
                 Logout {user && user.name ? `(${user.name})` : ''}
               </Button>
             ) : (
@@ -94,34 +110,36 @@ function App() {
         <section className="section">
           <div className="section__header">
             <div className="section__header-title-container">
-              <h2 className="section__header-title">Todos</h2>
+              <h2 className="section__header-title">To-do's</h2>
               <div className="view-toggle">
                 <Button 
+                  className="button--small"
                   variant={viewType === 'grid' ? "primary" : "secondary"} 
                   onClick={() => setViewType('grid')}
                 >
-                  <span>Grade</span>
+                  <Grid size={18} />
                 </Button>
                 <Button 
+                  className="button--small"
                   variant={viewType === 'list' ? "primary" : "secondary"} 
                   onClick={() => setViewType('list')}
                 >
-                  <span>Lista</span>
+                  <List size={18} />
                 </Button>
               </div>
             </div>
             <div className="section__header-buttons">
               <Button
                 variant="secondary"
-                onClick={() => setAiModalOpen(true)}
+                onClick={handleAIButtonClick}
               >
-                Criar com IA
+                <Bot size={18} className="button-icon" /> Criar com IA
               </Button>
               <Button
                 variant="primary"
                 onClick={handleShowTodoForm}
               >
-                Novo Todo
+                <PlusCircle size={18} className="button-icon" /> Novo To-do
               </Button>
             </div>
           </div>
@@ -141,18 +159,21 @@ function App() {
               <span className="filter-label">Filtrar por status:</span>
               <div className="filter-buttons">
                 <Button 
+                  className="button--small"
                   variant={statusFilter === 'all' ? "primary" : "secondary"} 
                   onClick={() => setStatusFilter('all')}
                 >
                   Todos
                 </Button>
                 <Button 
+                  className="button--small"
                   variant={statusFilter === 'pendente' ? "primary" : "secondary"} 
                   onClick={() => setStatusFilter('pendente')}
                 >
                   Pendentes
                 </Button>
                 <Button 
+                  className="button--small"
                   variant={statusFilter === 'concluida' ? "primary" : "secondary"} 
                   onClick={() => setStatusFilter('concluida')}
                 >

@@ -91,7 +91,7 @@ const TodoList: React.FC<TodoListProps> = ({ todos, viewType, onDelete, onEdit, 
                 ) : (
                     <div className="todo-list__list">
                         {todos.map((todo) => (
-                            <div key={todo.id} className="todo-list__item">
+                            <div key={todo.id} className={`todo-list__item ${todo.status === "concluida" ? "todo-list__item--completed" : ""}`}>
                                 <div className="todo-list__item-content">
                                     <h3 className="todo-list__item-title">{todo.title}</h3>
                                 </div>
