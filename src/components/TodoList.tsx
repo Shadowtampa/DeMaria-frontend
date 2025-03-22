@@ -1,8 +1,9 @@
-import { Component, useState } from 'react';
+import { Component} from 'react';
 import { Todo } from '../types/entities';
 import '../styles/components/card.less';
 import { Button } from './Button/Button';
 import ConfirmationModal from './ConfirmationModal';
+import { Switch } from './Switch/Switch';
 
 interface TodoListProps {
     todos: Todo[];
@@ -61,12 +62,11 @@ class TodoList extends Component<TodoListProps, TodoListState> {
                                 </p>
                             </div>
                             <div className="card__footer">
-                                <Button
-                                    variant="primary"
-                                    onClick={() => handleToggleTodoStatus(todo)}
-                                >
-                                    Editar
-                                </Button>
+                                <Switch 
+                                    checked={todo.status === "concluida"}
+                                    onChange={() => handleToggleTodoStatus(todo)}
+                                    label="Concluído"
+                                />
                                 <Button
                                     variant="secondary"
                                     onClick={() => onEdit(todo)}

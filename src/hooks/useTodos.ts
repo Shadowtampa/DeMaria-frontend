@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Todo } from '../types/entities';
-import { get, post, del } from '../services/baseAPI';
+import { get, post, put, del } from '../services/baseAPI';
 
 export function useTodos(isAuthenticated: boolean = false) {
     const [todos, setTodos] = useState<Todo[]>([]);
@@ -67,16 +67,27 @@ export function useTodos(isAuthenticated: boolean = false) {
         );
     };
 
-    const handleUpdateTodo = (todoAtualizado: Omit<Todo, 'id'>) => {
+    const handleUpdateTodo = async (todoAtualizado: Omit<Todo, 'id'>) => {
         if (todoEmEdicao) {
-            const todosAtualizados = todos.map(m =>
-                m.id === todoEmEdicao.id
-                    ? { ...todoAtualizado, id: m.id }
-                    : m
-            );
-            setTodos(todosAtualizados);
-            setTodoEmEdicao(undefined);
-            setMostrarFormTodo(false);
+            try {
+                setIsLoading(true);
+                await put(`/api/todo/${todoEmEdicao.id}`, {
+                    title: todoAtualizado.title,
+                    description: todoAtualizado.description || '',
+                    status: todoAtualizado.status || 'pendente'
+                }, true); // withToken = true
+                
+                // Atualiza a lista após editar
+                await fetchTodos();
+                
+                setTodoEmEdicao(undefined);
+                setMostrarFormTodo(false);
+            } catch (error) {
+                console.error('Erro ao atualizar todo:', error);
+                throw error;
+            } finally {
+                setIsLoading(false);
+            }
         }
     };
 
