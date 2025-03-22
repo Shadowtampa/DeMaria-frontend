@@ -36,7 +36,7 @@ export function useAuth() {
     const handleSignUp = async (name: string, email: string, password: string, password_confirmation: string) => {
         try {
             const response = await register(name, email, password, password_confirmation);
-            setToken(response.data.token);
+            setToken(response.data.token.plainTextToken);
             return response;
         } catch (error) {
             console.error('Erro no cadastro:', error);

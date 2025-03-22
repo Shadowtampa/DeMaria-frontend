@@ -37,11 +37,10 @@ function App() {
   };
 
   const handleAuthSubmit = (name: string, email: string, password: string, passwordConfirmation: string) => {
-    if (modalType === 'login') {
-      handleLogin(email, password);
-    } else {
-      handleSignUp(name, email, password, passwordConfirmation);
-    }
+    modalType === 'login' 
+      ? handleLogin(email, password)
+      : handleSignUp(name, email, password, passwordConfirmation);
+    
     setModalOpen(false);
   };
 

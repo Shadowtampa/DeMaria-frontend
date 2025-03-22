@@ -33,7 +33,9 @@ class TodoList extends Component<TodoListProps, TodoListState> {
                             <h3 className="card__header-title">{todo.title}</h3>
                         </div>
                         <div className="card__content">
-                            <p className="card__content-text">{todo.description}</p>
+                            {todo.description && (
+                                <p className="card__content-text">{todo.description}</p>
+                            )}
                             <p 
                                 className={`card__content-quantity ${todo.status === "concluida" ? "tachado" : ""}`} 
                                 onClick={() => handleToggleTodoStatus(todo)}
