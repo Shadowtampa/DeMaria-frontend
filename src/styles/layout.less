@@ -81,6 +81,32 @@
                     grid-template-columns: repeat(3, 1fr);
                 }
             }
+
+            &__filters {
+                margin-bottom: @spacing-md;
+                
+                .filter-group {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                    
+                    @media (min-width: @screen-md) {
+                        flex-direction: row;
+                        align-items: center;
+                    }
+                    
+                    .filter-label {
+                        font-weight: 500;
+                        color: @color-text;
+                        margin-right: 8px;
+                    }
+                    
+                    .filter-buttons {
+                        display: flex;
+                        gap: 8px;
+                    }
+                }
+            }
         }
     }
 }

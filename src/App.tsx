@@ -32,6 +32,13 @@ function App() {
 
   const [aiModalOpen, setAiModalOpen] = useState(false);
 
+  const [statusFilter, setStatusFilter] = useState<'all' | 'pendente' | 'concluida'>('all');
+
+  const filteredTodos = todos.filter(todo => {
+    if (statusFilter === 'all') return true;
+    return todo.status === statusFilter;
+  });
+
   const openSignUpForm = () => {
     setModalType('signup');
     setModalOpen(true);
@@ -111,8 +118,34 @@ function App() {
             </div>
           )}
 
+          <div className="section__filters">
+            <div className="filter-group">
+              <span className="filter-label">Filtrar por status:</span>
+              <div className="filter-buttons">
+                <Button 
+                  variant={statusFilter === 'all' ? "primary" : "secondary"} 
+                  onClick={() => setStatusFilter('all')}
+                >
+                  Todos
+                </Button>
+                <Button 
+                  variant={statusFilter === 'pendente' ? "primary" : "secondary"} 
+                  onClick={() => setStatusFilter('pendente')}
+                >
+                  Pendentes
+                </Button>
+                <Button 
+                  variant={statusFilter === 'concluida' ? "primary" : "secondary"} 
+                  onClick={() => setStatusFilter('concluida')}
+                >
+                  Concluídas
+                </Button>
+              </div>
+            </div>
+          </div>
+
           <TodoList
-            todos={todos}
+            todos={filteredTodos}
             onDelete={handleDeleteTodo}
             onEdit={handleEditTodo}
             handleToggleTodoStatus={handleToggleTodoStatus}
