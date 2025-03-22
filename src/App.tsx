@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import './styles/globals.css';
 import './styles/layout.less';
 import { Button } from './components/Button/Button';
 import { useTodos } from './hooks/useTodos';
+import { useAuth } from './hooks/useAuth';
 import TodoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
+import AuthModal from './components/AuthModal';
 
 function App() {
   const {
@@ -19,6 +22,29 @@ function App() {
     handleToggleTodoStatus
   } = useTodos();
 
+  const { isAuthenticated, handleSignUp, handleLogin, handleLogout, user } = useAuth();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<'login' | 'signup' | null>(null);
+
+  const openSignUpForm = () => {
+    setModalType('signup');
+    setModalOpen(true);
+  };
+
+  const openLoginForm = () => {
+    setModalType('login');
+    setModalOpen(true);
+  };
+
+  const handleAuthSubmit = (name: string, email: string, password: string, passwordConfirmation: string) => {
+    if (modalType === 'login') {
+      handleLogin(email, password);
+    } else {
+      handleSignUp(name, email, password, passwordConfirmation);
+    }
+    setModalOpen(false);
+  };
+
   return (
     <div className="app">
       <header className="app__header">
@@ -26,6 +52,22 @@ function App() {
           <h1 className="app__header-title">
             Teste técnico DeMaria - Luis Gomes
           </h1>
+          <div className="app__header-buttons">
+            {isAuthenticated ? (
+              <Button variant="danger" onClick={handleLogout}>
+                Logout {user && user.name ? `(${user.name})` : ''}
+              </Button>
+            ) : (
+              <>
+                <Button variant="primary" onClick={openSignUpForm}>
+                  Cadastrar
+                </Button>
+                <Button variant="secondary" onClick={openLoginForm}>
+                  Login
+                </Button>
+              </>
+            )}
+          </div>
         </div>
       </header>
 
@@ -59,6 +101,13 @@ function App() {
           />
         </section>
       </main>
+
+      <AuthModal 
+        isOpen={modalOpen}
+        type={modalType}
+        onClose={() => setModalOpen(false)}
+        onSubmit={handleAuthSubmit}
+      />
     </div>
   );
 }

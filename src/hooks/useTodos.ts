@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Todo } from '../types/entities';
+import { register, login } from '../services/authService';
 
 export function useTodos() {
     const [todos, setTodos] = useState<Todo[]>([]);
@@ -58,6 +59,16 @@ export function useTodos() {
         setTodoEmEdicao(undefined);
     };
 
+    const handleSignUp = () => {
+        // Implementação do cadastro
+        // Por exemplo: register('nome', 'email', 'senha', 'senha');
+    };
+
+    const handleLogin = () => {
+        // Implementação do login
+        // Por exemplo: login('email', 'senha');
+    };
+
     return {
         todos,
         setTodos,
@@ -69,6 +80,8 @@ export function useTodos() {
         handleDeleteTodo,
         handleCancelTodo,
         handleShowTodoForm,
-        handleToggleTodoStatus
+        handleToggleTodoStatus,
+        handleSignUp,
+        handleLogin
     };
 } 
