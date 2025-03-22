@@ -9,6 +9,8 @@ import TodoList from './components/TodoList';
 import AuthModal from './components/AuthModal';
 
 function App() {
+  const { isAuthenticated, handleSignUp, handleLogin, handleLogout, user } = useAuth();
+  
   const {
     todos,
     todoEmEdicao,
@@ -20,9 +22,8 @@ function App() {
     handleCancelTodo,
     handleShowTodoForm,
     handleToggleTodoStatus
-  } = useTodos();
+  } = useTodos(isAuthenticated);
 
-  const { isAuthenticated, handleSignUp, handleLogin, handleLogout, user } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'login' | 'signup' | null>(null);
 

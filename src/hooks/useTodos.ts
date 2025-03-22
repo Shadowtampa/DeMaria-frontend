@@ -1,11 +1,33 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Todo } from '../types/entities';
-import { register, login } from '../services/authService';
+import { get } from '../services/baseAPI';
 
-export function useTodos() {
+export function useTodos(isAuthenticated: boolean = false) {
     const [todos, setTodos] = useState<Todo[]>([]);
     const [todoEmEdicao, setTodoEmEdicao] = useState<Todo | undefined>();
     const [mostrarFormTodo, setMostrarFormTodo] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+    // Carrega todos quando o hook é inicializado e o usuário está autenticado
+    useEffect(() => {
+        if (isAuthenticated) {
+            fetchTodos();
+        }
+    }, [isAuthenticated]);
+
+    const fetchTodos = async () => {
+        try {
+            setIsLoading(true);
+            const response = await get('/api/todo', true); // withToken = true
+            setTodos(response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Erro ao buscar todos:', error);
+            throw error;
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     const handleAddTodo = (todo: Omit<Todo, 'id'>) => {
         const novoTodo: Todo = {
@@ -59,29 +81,19 @@ export function useTodos() {
         setTodoEmEdicao(undefined);
     };
 
-    const handleSignUp = () => {
-        // Implementação do cadastro
-        // Por exemplo: register('nome', 'email', 'senha', 'senha');
-    };
-
-    const handleLogin = () => {
-        // Implementação do login
-        // Por exemplo: login('email', 'senha');
-    };
-
     return {
         todos,
         setTodos,
         todoEmEdicao,
         mostrarFormTodo,
+        isLoading,
+        fetchTodos,
         handleAddTodo,
         handleEditTodo,
         handleUpdateTodo,
         handleDeleteTodo,
         handleCancelTodo,
         handleShowTodoForm,
-        handleToggleTodoStatus,
-        handleSignUp,
-        handleLogin
+        handleToggleTodoStatus
     };
 } 
