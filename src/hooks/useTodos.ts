@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Todo } from '../types/entities';
 import { get, post, put, del } from '../services/baseAPI';
 
@@ -7,6 +7,7 @@ export function useTodos(isAuthenticated: boolean = false) {
     const [todoEmEdicao, setTodoEmEdicao] = useState<Todo | undefined>();
     const [mostrarFormTodo, setMostrarFormTodo] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [pendingToggles, setPendingToggles] = useState<Record<number, NodeJS.Timeout>>({});
 
     // Carrega todos quando o hook é inicializado e o usuário está autenticado
     useEffect(() => {
@@ -14,6 +15,14 @@ export function useTodos(isAuthenticated: boolean = false) {
             fetchTodos();
         }
     }, [isAuthenticated]);
+
+    // Limpa os timeouts pendentes ao desmontar o componente
+    useEffect(() => {
+        return () => {
+            // Limpa todos os timeouts pendentes
+            Object.values(pendingToggles).forEach(timeout => clearTimeout(timeout));
+        };
+    }, [pendingToggles]);
 
     const fetchTodos = async () => {
         try {
@@ -58,13 +67,56 @@ export function useTodos(isAuthenticated: boolean = false) {
     };
 
     const handleToggleTodoStatus = (todo: Todo) => {
+        // Atualiza visualmente de imediato (otimista)
+        const newStatus = todo.status === 'pendente' ? 'concluida' : 'pendente';
         const updatedTodo = {
             ...todo,
-            status: todo.status === 'pendente' ? 'concluida' : 'pendente'
+            status: newStatus
         };
+        
+        // Atualiza a UI imediatamente
         setTodos((prevTodos) =>
             prevTodos.map((t) => (t.id === todo.id ? updatedTodo : t))
         );
+        
+        // Limpa timeout anterior se existir
+        if (pendingToggles[todo.id]) {
+            clearTimeout(pendingToggles[todo.id]);
+        }
+        
+        // Configura novo timeout
+        const timeoutId = setTimeout(async () => {
+            try {
+                setIsLoading(true);
+                await put(`/api/todo/${todo.id}`, {
+                    status: newStatus
+                }, true);
+                
+                // Remove este toggle dos pendentes
+                setPendingToggles(prev => {
+                    const newPending = {...prev};
+                    delete newPending[todo.id];
+                    return newPending;
+                });
+                
+                // Atualizar lista após persistir (opcional)
+                // await fetchTodos();
+            } catch (error) {
+                console.error('Erro ao atualizar status:', error);
+                // Reverte o estado visual em caso de erro
+                setTodos((prevTodos) =>
+                    prevTodos.map((t) => (t.id === todo.id ? todo : t))
+                );
+            } finally {
+                setIsLoading(false);
+            }
+        }, 2000); // 2 segundos de debounce
+        
+        // Armazena o novo timeout
+        setPendingToggles(prev => ({
+            ...prev,
+            [todo.id]: timeoutId
+        }));
     };
 
     const handleUpdateTodo = async (todoAtualizado: Omit<Todo, 'id'>) => {
